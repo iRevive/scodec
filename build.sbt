@@ -1,5 +1,5 @@
 import com.typesafe.tools.mima.core._
-import com.typesafe.sbt.SbtGit.GitKeys.gitHeadCommit
+//import com.typesafe.sbt.SbtGit.GitKeys.gitHeadCommit
 
 ThisBuild / tlBaseVersion := "1.11"
 ThisBuild / tlVersionIntroduced := Map("2.12" -> "1.11.4", "2.13" -> "1.11.4")
@@ -21,7 +21,7 @@ ThisBuild / licenses := List(
     )
   )
 )
-ThisBuild / crossScalaVersions := List("2.12.16", "2.13.8")
+ThisBuild / crossScalaVersions := List("2.12.16", "2.13.16")
 
 ThisBuild / tlCiReleaseBranches := List("series/1.11.x")
 ThisBuild / tlCiHeaderCheck := false
@@ -50,11 +50,11 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .settings(
     name := "scodec-core",
     libraryDependencies ++= Seq(
-      "org.scodec" %%% "scodec-bits" % "1.1.34",
-      "com.chuusai" %%% "shapeless" % "2.3.9"
+      "org.scodec" %%% "scodec-bits" % "1.2.1",
+      "com.chuusai" %%% "shapeless" % "2.3.13"
     ),
     buildInfoPackage := "scodec",
-    buildInfoKeys := Seq[BuildInfoKey](version, scalaVersion, gitHeadCommit),
+    buildInfoKeys := Seq[BuildInfoKey](version, scalaVersion/*, gitHeadCommit*/),
     mimaBinaryIssueFilters ++= Seq(
       ProblemFilters.exclude[MissingMethodProblem]("scodec.codecs.UuidCodec.codec"),
       ProblemFilters.exclude[MissingMethodProblem]("scodec.Attempt.toTry"),
@@ -77,9 +77,9 @@ lazy val testkit = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .settings(
     name := "scodec-testkit",
     libraryDependencies ++= Seq(
-      "org.scalacheck" %%% "scalacheck" % "1.16.0",
-      "org.scalatest" %%% "scalatest" % "3.2.13",
-      "org.scalatestplus" %%% "scalacheck-1-16" % "3.2.13.0"
+      "org.scalacheck" %%% "scalacheck" % "1.18.1",
+  //    "org.scalatest" %%% "scalatest" % "3.2.19",
+  //    "org.scalatestplus" %%% "scalacheck-1-18" % "3.2.19.0"
     ),
     tlMimaPreviousVersions ~= (_.filterNot(Set("1.11.4")))
   )
